@@ -34,34 +34,34 @@ $(wildcard ../makefile.init) \
 $(wildcard ../makefile.targets) \
 
 
-BUILD_ARTIFACT_NAME := G4_UART
+BUILD_ARTIFACT_NAME := G4_QUADRO_ENCODER
 BUILD_ARTIFACT_EXTENSION := elf
 BUILD_ARTIFACT_PREFIX :=
 BUILD_ARTIFACT := $(BUILD_ARTIFACT_PREFIX)$(BUILD_ARTIFACT_NAME)$(if $(BUILD_ARTIFACT_EXTENSION),.$(BUILD_ARTIFACT_EXTENSION),)
 
 # Add inputs and outputs from these tool invocations to the build variables 
 EXECUTABLES += \
-G4_UART.elf \
+G4_QUADRO_ENCODER.elf \
 
 MAP_FILES += \
-G4_UART.map \
+G4_QUADRO_ENCODER.map \
 
 SIZE_OUTPUT += \
 default.size.stdout \
 
 OBJDUMP_LIST += \
-G4_UART.list \
+G4_QUADRO_ENCODER.list \
 
 
 # All Target
 all: main-build
 
 # Main-build Target
-main-build: G4_UART.elf secondary-outputs
+main-build: G4_QUADRO_ENCODER.elf secondary-outputs
 
 # Tool invocations
-G4_UART.elf G4_UART.map: $(OBJS) $(USER_OBJS) C:\Users\VR\STM32CubeIDE\workspace_1.8.0\G4_UART\STM32G474RETX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "G4_UART.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\VR\STM32CubeIDE\workspace_1.8.0\G4_UART\STM32G474RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="G4_UART.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+G4_QUADRO_ENCODER.elf G4_QUADRO_ENCODER.map: $(OBJS) $(USER_OBJS) C:\projects\STM32_QUADRO_ENCODER\STM32G474RETX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "G4_QUADRO_ENCODER.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\projects\STM32_QUADRO_ENCODER\STM32G474RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="G4_QUADRO_ENCODER.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
@@ -70,14 +70,14 @@ default.size.stdout: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
 	@echo 'Finished building: $@'
 	@echo ' '
 
-G4_UART.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-objdump -h -S $(EXECUTABLES) > "G4_UART.list"
+G4_QUADRO_ENCODER.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-objdump -h -S $(EXECUTABLES) > "G4_QUADRO_ENCODER.list"
 	@echo 'Finished building: $@'
 	@echo ' '
 
 # Other Targets
 clean:
-	-$(RM) G4_UART.elf G4_UART.list G4_UART.map default.size.stdout
+	-$(RM) G4_QUADRO_ENCODER.elf G4_QUADRO_ENCODER.list G4_QUADRO_ENCODER.map default.size.stdout
 	-@echo ' '
 
 secondary-outputs: $(SIZE_OUTPUT) $(OBJDUMP_LIST)

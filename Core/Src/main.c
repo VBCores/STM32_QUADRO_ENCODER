@@ -19,6 +19,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "i2c.h"
+#include "tim.h"
 #include "usart.h"
 #include "gpio.h"
 
@@ -88,20 +89,24 @@ int main(void)
   MX_GPIO_Init();
   MX_I2C4_Init();
   MX_USART2_UART_Init();
+  MX_TIM8_Init();
   /* USER CODE BEGIN 2 */
+  HAL_TIM_Encoder_Start(&htim8, TIM_CHANNEL_ALL);
+
+  uint16_t encData = 0;//Encoder value
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  int i = 0;
   while (1)
   {
+
+	  encData = __HAL_TIM_GET_COUNTER(&htim8);//0 is positive, 1 is negative
 	  uint8_t msg[10];
-	  sprintf(msg,"%d \r\n\0", i);
+	  sprintf(msg,"%d \r\n\0", encData);
 	  HAL_UART_Transmit_IT(&huart2, msg, sizeof(msg));
-	  HAL_Delay(500);
+	  HAL_Delay(100);
 	  HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
-	  i++;
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
